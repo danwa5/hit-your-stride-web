@@ -1,5 +1,11 @@
 <template>
   <div class="runs">
+    <ul v-if="errors && errors.length">
+      <li v-for="error in errors">
+        {{ error.message }}
+      </li>
+    </ul>
+
     <table>
       <thead>
         <tr>
@@ -12,11 +18,11 @@
       </thead>
       <tbody>
         <tr v-for="run in runs" v-bind:key="run.id">
-          <td>{{ date(run.data.attributes.start_date) }}</td>
-          <td>{{ miles(run.data.attributes.distance) }}</td>
-          <td>{{ time(run.data.attributes.moving_time) }}</td>
-          <td>{{ pace(run.data.attributes.moving_time, run.data.attributes.distance) }}</td>
-          <td>{{ location(run.data.attributes) }}</td>
+          <td>{{ date(run.attributes.start_date) }}</td>
+          <td>{{ miles(run.attributes.distance) }}</td>
+          <td>{{ time(run.attributes.moving_time) }}</td>
+          <td>{{ pace(run.attributes.moving_time, run.attributes.distance) }}</td>
+          <td>{{ location(run.attributes) }}</td>
         </tr>
       </tbody>
     </table>
@@ -31,7 +37,8 @@ export default {
   name: 'Runs',
   data() {
     return {
-      runs: []
+      runs: [],
+      errors: []
     }
   },
   methods: {
@@ -68,7 +75,10 @@ export default {
     axios
       .get('http://localhost:3000/api/v1/activities')
       .then(response => {
-        this.runs = response.data
+        this.runs = response.data.results
+      })
+      .catch(e => {
+        this.errors.push(e)
       })
   }
 }
