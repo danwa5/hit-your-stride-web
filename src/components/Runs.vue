@@ -1,7 +1,7 @@
 <template>
   <div class="runs">
     <ul v-if="errors && errors.length">
-      <li v-for="error in errors">
+      <li v-for="(error, index) in errors" v-bind:key="index">
         {{ error.message }}
       </li>
     </ul>
@@ -26,22 +26,60 @@
         </tr>
       </tbody>
     </table>
+
+    <div style="display: flex;">
+      <div v-for="(link, index) in pageLinks" v-bind:key="index" style="margin: 10px;">
+        <a href="#" @click="getRunActivities(link.page)">{{ link.label }}</a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import { ApiService } from '../ApiService';
 import moment from 'moment'
+
+const apiService = new ApiService();
 
 export default {
   name: 'Runs',
   data() {
     return {
       runs: [],
-      errors: []
+      errors: [],
+      pages: null,
+      pageLinks: [],
     }
   },
   methods: {
+    getRunActivities: function(page) {
+      apiService.getRunActivities(page)
+                .then((data) => {
+                  this.runs = data.results
+                  this.pages = data.pagy
+                }).catch((e) => {
+                  this.errors.push(e)
+                });
+    },
+    setPages() {
+      this.pageLinks = [];
+
+      if (this.pages.count > 0 && this.pages.page !== 1) {
+        this.pageLinks.push({ label: 'First', page: 1 });
+      }
+
+      if (this.pages.prev !== null) {
+        this.pageLinks.push({ label: 'Previous', page: this.pages.prev });
+      }
+
+      if (this.pages.next !== null) {
+        this.pageLinks.push({ label: 'Next', page: this.pages.next });
+      }
+
+      if (this.pages.last !== null) {
+        this.pageLinks.push({ label: 'Last', page: this.pages.last });
+      }
+    },
     date: function(date) {
       date = date.replace(/Z/, '');
       return moment(date).format('M-D-YYYY h:mma');
@@ -72,14 +110,12 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get('http://localhost:3000/api/v1/activities')
-      .then(response => {
-        this.runs = response.data.results
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+    this.getRunActivities();
+  },
+  watch: {
+    pages() {
+      this.setPages();
+    }
   }
 }
 </script>
