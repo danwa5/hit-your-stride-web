@@ -1,13 +1,18 @@
 <template>
   <form>
     <input
-      v-model="searchString"
-      v-on:keydown.13.prevent="parseSearchString"
+      v-model="form['city']"
+      v-on:keydown.13.prevent="parseFormFields"
       type="text"
-      class="form-control"
-      placeholder="Search ..."
+      placeholder="City"
     >
-    <button v-on:click="parseSearchString" type="button">Search</button>
+    <input
+      v-model="form['country']"
+      v-on:keydown.13.prevent="parseFormFields"
+      type="text"
+      placeholder="Country"
+    >
+    <button v-on:click="parseFormFields" type="button">Search</button>
   </form>
 </template>
 
@@ -16,19 +21,22 @@ export default {
   name: 'SearchForm',
   data() {
     return {
-      searchString: ''
+      form: {}
     };
   },
   methods: {
-    parseSearchString() {
-      // Trim search string
-      const searchParams = this.searchString.trim();
+    parseFormFields() {
+      const searchParams = {};
 
-      if (searchParams !== '') {
-        // Emit event
+      for (var key in this.form) {
+        let value = this.form[key].trim();
+        if (value !== '') {
+          searchParams[key] = value;
+        }
+      }
+
+      if (Object.keys(searchParams).length > 0) {
         this.$emit('search', searchParams);
-        // Reset input field
-        // this.searchString = '';
       }
     }
   }

@@ -36,25 +36,28 @@ export default {
       pages: null,
       pageLinks: [],
       queryParams: '',
-      reformattedSearchString: '',
-      api: {
-        city: '',
-        country: ''
-      }
+      reformattedSearchString: ''
     };
   },
   methods: {
     search(searchParams) {
+      let qParams = '';
+
+      // format query parameters
+      for (var key in searchParams) {
+        let value = searchParams[key];
+        if (value !== '') {
+          searchParams[key] = value;
+          qParams = qParams.concat(`${key}=${value}&`);
+        }
+      }
+
       this.reformattedSearchString = searchParams;
-      this.api.city = searchParams;
-      const { city, country } = this.api;
-      const qParams = `city=${city}&country=${country}`;
-      this.queryParams = `city=${city}&country=${country}`;
+      this.queryParams = qParams;
       this.getData(qParams);
     },
 
     getData(params = '', page = 1) {
-
       if (params === '') {
         params = this.queryParams;
       }
