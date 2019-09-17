@@ -6,8 +6,8 @@ export class ApiService {
   constructor() {
   }
 
-  getRunActivities(page = 1) {
-    const url = `${API_URL}/api/v1/activities?page=${page}`;
+  getRunActivities(params, page = 1) {
+    const url = `${API_URL}/api/v1/activities?${params}&page=${page}`;
     return axios.get(url).then(response => response.data);
   }
 }
