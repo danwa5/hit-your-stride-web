@@ -1,15 +1,21 @@
 <template>
   <div id="app">
-    <SearchForm v-on:search="search"/>
-    <SearchResults
-      v-bind:runs="runs"
-      v-bind:errors="errors"
-      v-bind:reformattedSearchString="reformattedSearchString"
-    />
-
     <div style="display: flex;">
-      <div v-for="(link, index) in pageLinks" v-bind:key="index" style="margin: 10px;">
-        <a href="#" @click="getData('', link.page)">{{ link.label }}</a>
+      <div>
+        <SearchResults
+          v-bind:runs="runs"
+          v-bind:errors="errors"
+          v-bind:reformattedSearchString="reformattedSearchString"
+        />
+
+        <div style="display: flex;">
+          <div v-for="(link, index) in pageLinks" v-bind:key="index" style="margin: 10px;">
+            <a href="#" @click="getData('', link.page)">{{ link.label }}</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <SearchForm v-on:search="search"/>
       </div>
     </div>
   </div>
@@ -46,8 +52,23 @@ export default {
       // format query parameters
       for (var key in searchParams) {
         let value = searchParams[key];
+
         if (value !== '') {
           searchParams[key] = value;
+
+          if (key.startsWith('distance')) {
+            value = (value * 1609.34).toFixed(3);
+          }
+
+          if (key.startsWith('duration')) {
+            value = Math.round(value * 60);
+          }
+
+          if (key === 'mile-pace') {
+            let res = value.split(':');
+            value = (parseInt(res[0]) * 60) + parseInt(res[1]);
+          }
+
           qParams = qParams.concat(`${key}=${value}&`);
         }
       }

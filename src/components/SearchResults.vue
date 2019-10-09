@@ -28,7 +28,7 @@
           <td>{{ date(run.attributes.start_date) }}</td>
           <td>{{ miles(run.attributes.distance) }}</td>
           <td>{{ time(run.attributes.moving_time) }}</td>
-          <td>{{ pace(run.attributes.moving_time, run.attributes.distance) }}</td>
+          <td>{{ pace(run.attributes.mile_pace)}}</td>
           <td v-text="run.attributes.layoff"></td>
           <td>{{ location(run.attributes) }}</td>
         </tr>
@@ -63,12 +63,10 @@ export default {
       return (meters * 0.00062137).toFixed(2);
     },
 
-    pace: function(seconds, meters) {
-      let min_per_mile = seconds / (meters * 60 * 0.00062137);
-      let min = Math.floor(min_per_mile);
-      let fractional = min_per_mile - min;
-      let sec = Math.round(fractional * 60).toString().padStart(2, '0');
-      return min + ':' + sec;
+    pace: function(seconds) {
+      let minutes = Math.floor(seconds / 60);
+      let fractional = (seconds % 60).toString().padStart(2, '0');
+      return minutes + ':' + fractional;
     },
 
     time: function(seconds) {
