@@ -1,23 +1,41 @@
 <template>
   <div id="app">
-    <div style="display: flex;">
-      <div>
-        <SearchResults
-          v-bind:runs="runs"
-          v-bind:errors="errors"
-          v-bind:reformattedSearchString="reformattedSearchString"
-        />
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          HIT YOUR STRIDE
+        </a>
 
-        <div style="display: flex;">
-          <div v-for="(link, index) in pageLinks" v-bind:key="index" style="margin: 10px;">
-            <a href="#" @click="getData('', link.page)">{{ link.label }}</a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    </nav>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-one-quarter">
+            <SearchForm v-on:search="search"/>
+          </div>
+          <div class="column">
+            <SearchResults
+              v-bind:runs="runs"
+              v-bind:errors="errors"
+              v-bind:reformattedSearchString="reformattedSearchString"
+            />
+
+            <div style="display: flex;">
+              <div v-for="(link, index) in pageLinks" v-bind:key="index" style="margin: 10px;">
+                <a href="#" @click="getData('', link.page)">{{ link.label }}</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div>
-        <SearchForm v-on:search="search"/>
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -90,7 +108,6 @@ export default {
           this.pages = data.pagy
         }).catch(error => {
           this.errors.push(error);
-          console.log(error);
         });
     },
 
@@ -124,14 +141,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

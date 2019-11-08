@@ -1,66 +1,122 @@
 <template>
   <form>
-    <input
-      v-model="form['city']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="City"
-    >
-    <br/>
-    <input
-      v-model="form['country']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Country"
-    >
-    <br/>
-    <input
-      v-model="form['distance-min']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Distance (miles, min)"
-    >
-    <input
-      v-model="form['distance-max']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Distance (miles, max)"
-    >
-    <br/>
-    <input
-      v-model="form['duration-min']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Duration (minutes, min)"
-    >
-    <input
-      v-model="form['duration-max']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Duration (minutes, max)"
-    >
-    <br/>
-    <input
-      v-model="form['mile-pace']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Mile Pace (M:SS)"
-    >
-    <br/>
-    <input
-      v-model="form['layoff-min']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Layoff (days, min)"
-    >
-    <input
-      v-model="form['layoff-max']"
-      v-on:keydown.13.prevent="parseFormFields"
-      type="text"
-      placeholder="Layoff (days, max)"
-    >
-    <br/>
-    <button v-on:click="parseFormFields" type="button">Search</button>
+    <div class="field">
+      <label class="label">City</label>
+      <div class="control">
+        <input
+          v-model="form['city']"
+          v-on:keydown.13.prevent="parseFormFields"
+          type="text"
+          placeholder="City"
+          class="input"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Country</label>
+      <div class="control">
+        <input
+          v-model="form['country']"
+          v-on:keydown.13.prevent="parseFormFields"
+          type="text"
+          placeholder="Country"
+          class="input"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Distance (miles)</label>
+      <div class="field-body is-horizontal">
+        <div class="field">
+          <input
+            v-model="form['distance-min']"
+            v-on:keydown.13.prevent="parseFormFields"
+            type="text"
+            placeholder="min"
+            class="input"
+          >
+        </div>
+        <div class="field">
+          <input
+            v-model="form['distance-max']"
+            v-on:keydown.13.prevent="parseFormFields"
+            type="text"
+            placeholder="max"
+            class="input"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Duration (minutes)</label>
+      <div class="field-body is-horizontal">
+        <div class="field">
+          <input
+            v-model="form['duration-min']"
+            v-on:keydown.13.prevent="parseFormFields"
+            type="text"
+            placeholder="min"
+            class="input"
+          >
+        </div>
+        <div class="field">
+          <input
+            v-model="form['duration-max']"
+            v-on:keydown.13.prevent="parseFormFields"
+            type="text"
+            placeholder="max"
+            class="input"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Mile Pace (M:SS)</label>
+      <div class="control">
+        <input
+          v-model="form['mile-pace']"
+          v-on:keydown.13.prevent="parseFormFields"
+          type="text"
+          placeholder="Mile Pace"
+          class="input"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Layoff (days)</label>
+      <div class="field-body is-horizontal">
+        <div class="field">
+          <input
+            v-model="form['layoff-min']"
+            v-on:keydown.13.prevent="parseFormFields"
+            type="text"
+            placeholder="Layoff (min)"
+            class="input"
+          >
+        </div>
+        <div class="field">
+          <input
+            v-model="form['layoff-max']"
+            v-on:keydown.13.prevent="parseFormFields"
+            type="text"
+            placeholder="max"
+            class="input  "
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="buttons">
+        <button v-on:click="parseFormFields" type="button" class="button is-primary">Search</button>
+        <button v-on:click="resetForm" type="button" class="button is-light">Reset</button>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -86,6 +142,10 @@ export default {
       if (Object.keys(searchParams).length > 0) {
         this.$emit('search', searchParams);
       }
+    },
+
+    resetForm() {
+      this.$emit('search', {});
     }
   }
 };

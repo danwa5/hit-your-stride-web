@@ -1,18 +1,12 @@
 <template>
-  <div class="container mb-3">
+  <div class="container">
     <ul v-if="errors && errors.length">
       <li v-for="(error, index) in errors" v-bind:key="index">
         {{ error.message }}
       </li>
     </ul>
 
-    <div class="d-flex mb-3">
-      <div class="mr-auto">
-        <h3>Search Results for "{{ reformattedSearchString }}"</h3>
-      </div>
-    </div>
-
-    <table>
+    <table class="table is-narrow is-hoverable">
       <thead>
         <tr>
           <th>Date</th>
