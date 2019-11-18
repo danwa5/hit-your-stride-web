@@ -32,6 +32,8 @@
                 <a href="#" @click="getData('', link.page)">{{ link.label }}</a>
               </div>
             </div>
+
+            <GChart v-bind:runs="runs" />
           </div>
         </div>
       </div>
@@ -43,6 +45,7 @@
 import { ApiService } from './ApiService';
 import SearchForm from './components/SearchForm';
 import SearchResults from './components/SearchResults';
+import GChart from './components/GChart';
 import axios from 'axios';
 
 const apiService = new ApiService();
@@ -51,9 +54,10 @@ export default {
   name: 'app',
   components: {
     SearchForm,
-    SearchResults
+    SearchResults,
+    GChart
   },
-  data() {
+  data: function() {
     return {
       runs: [],
       errors: [],
