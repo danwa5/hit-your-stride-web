@@ -24,7 +24,8 @@ export default {
 
       // Set chart options
       var options = {
-        title: "Mile Pace for Last 10 Runs",
+        hAxis: { title: 'Run Date' },
+        vAxis: { title: 'Mile Pace (min/mile)' },
         width: 900,
         height: 200,
         bar: { groupWidth: "95%" },
@@ -35,6 +36,7 @@ export default {
       var chart = new google.visualization.ColumnChart(document.getElementById("gchart_div"));
       chart.draw(view, options);
     },
+
     date: function(date) {
       date = date.replace(/Z/, '');
       return moment(date).format('M-D-YYYY');
@@ -45,13 +47,33 @@ export default {
   ],
   computed: {
     chart_data: function() {
-      var d = [["Date", "MilePace", { role: "style" } ]];
+      var d = [["Date", "Mile Pace (min/mile)", { role: "style" } ]];
 
       this.runs.slice().reverse().forEach(function(value) {
         let raw_date = value.attributes.start_date;
         let date = moment(raw_date.replace(/Z/, '')).format('M-D-YY');
-        let mile_pace = value.attributes.mile_pace;
-        d.push([date, mile_pace, "gold"]);
+        let seconds = value.attributes.mile_pace;
+        let mile_pace = Math.round((seconds / 60) * 100) / 100;
+        let color;
+
+        switch(true) {
+          case (mile_pace <= 7.5):
+            color = '#74e6b8';
+            break;
+          case (mile_pace <= 7.75):
+            color = '#53b685';
+            break;
+          case (mile_pace <= 8.0):
+            color = '#357b55';
+            break;
+          case (mile_pace <= 8.25):
+            color = '#255c57';
+            break;
+          default:
+            color = '#153633';
+        }
+
+        d.push([date, mile_pace, color]);
       });
 
       return d;
