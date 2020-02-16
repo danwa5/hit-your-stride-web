@@ -46,7 +46,6 @@ import { ApiService } from './ApiService';
 import SearchForm from './components/SearchForm';
 import SearchResults from './components/SearchResults';
 import GChart from './components/GChart';
-import axios from 'axios';
 
 const apiService = new ApiService();
 
