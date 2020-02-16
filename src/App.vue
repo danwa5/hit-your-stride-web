@@ -28,8 +28,13 @@
             />
 
             <div style="display: flex;">
-              <div v-for="(link, index) in pageLinks" v-bind:key="index" style="margin: 10px;">
-                <a href="#" @click="getData('', link.page)">{{ link.label }}</a>
+              <div v-for="(link, index) in pageLinks" v-bind:key="index">
+                <a v-if="link.page > 0" href="#" class="pagination-link" @click="getData('', link.page)">
+                  <font-awesome-icon :icon="['fas', link.icon]" />
+                </a>
+                <a v-else class="pagination-link" disabled>
+                  <font-awesome-icon :icon="['fas', link.icon]" />
+                </a>
               </div>
             </div>
 
@@ -118,19 +123,27 @@ export default {
       this.pageLinks = [];
 
       if (this.pages.count > 0 && this.pages.page !== 1) {
-        this.pageLinks.push({ label: 'First', page: 1 });
+        this.pageLinks.push({ icon: 'fast-backward', page: 1 });
+      } else {
+        this.pageLinks.push({ icon: 'fast-backward', page: 0 });
       }
 
       if (this.pages.prev !== null) {
-        this.pageLinks.push({ label: 'Previous', page: this.pages.prev });
+        this.pageLinks.push({ icon: 'backward', page: this.pages.prev });
+      } else {
+        this.pageLinks.push({ icon: 'backward', page: 0 });
       }
 
       if (this.pages.next !== null) {
-        this.pageLinks.push({ label: 'Next', page: this.pages.next });
+        this.pageLinks.push({ icon: 'forward', page: this.pages.next });
+      } else {
+        this.pageLinks.push({ icon: 'forward', page: 0 });
       }
 
       if (this.pages.last !== null) {
-        this.pageLinks.push({ label: 'Last', page: this.pages.last });
+        this.pageLinks.push({ icon: 'fast-forward', page: this.pages.last });
+      } else {
+        this.pageLinks.push({ icon: 'fast-forward', page: 0 });
       }
     }
   },
