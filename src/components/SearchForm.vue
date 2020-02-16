@@ -8,7 +8,7 @@
           v-on:keydown.13.prevent="parseFormFields"
           type="text"
           placeholder="City"
-          class="input"
+          class="input is-small"
         >
       </div>
     </div>
@@ -21,7 +21,7 @@
           v-on:keydown.13.prevent="parseFormFields"
           type="text"
           placeholder="Country"
-          class="input"
+          class="input is-small"
         >
       </div>
     </div>
@@ -35,7 +35,7 @@
             v-on:keydown.13.prevent="parseFormFields"
             type="text"
             placeholder="min"
-            class="input"
+            class="input is-small"
           >
         </div>
         <div class="field">
@@ -44,7 +44,7 @@
             v-on:keydown.13.prevent="parseFormFields"
             type="text"
             placeholder="max"
-            class="input"
+            class="input is-small"
           >
         </div>
       </div>
@@ -59,7 +59,7 @@
             v-on:keydown.13.prevent="parseFormFields"
             type="text"
             placeholder="min"
-            class="input"
+            class="input is-small"
           >
         </div>
         <div class="field">
@@ -68,7 +68,7 @@
             v-on:keydown.13.prevent="parseFormFields"
             type="text"
             placeholder="max"
-            class="input"
+            class="input is-small"
           >
         </div>
       </div>
@@ -82,7 +82,7 @@
           v-on:keydown.13.prevent="parseFormFields"
           type="text"
           placeholder="Mile Pace"
-          class="input"
+          class="input is-small"
         >
       </div>
     </div>
@@ -96,7 +96,7 @@
             v-on:keydown.13.prevent="parseFormFields"
             type="text"
             placeholder="Layoff (min)"
-            class="input"
+            class="input is-small"
           >
         </div>
         <div class="field">
@@ -105,7 +105,7 @@
             v-on:keydown.13.prevent="parseFormFields"
             type="text"
             placeholder="max"
-            class="input  "
+            class="input is-small"
           >
         </div>
       </div>
@@ -113,8 +113,8 @@
 
     <div class="field">
       <div class="buttons">
-        <button v-on:click="parseFormFields" type="button" class="button is-primary">Search</button>
-        <button v-on:click="resetForm" type="button" class="button is-light">Reset</button>
+        <button v-on:click="parseFormFields" type="button" class="button is-primary is-small">Search</button>
+        <button v-on:click="resetForm" type="button" class="button is-light is-small">Reset</button>
       </div>
     </div>
   </form>
@@ -150,14 +150,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-input,
-button {
-  box-shadow: none !important;
-}
-
-.form-control {
-  border-color: #6c757d;
-}
-</style>

@@ -16,11 +16,11 @@
 
     <section class="section">
       <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-one-quarter">
+        <div class="columns">
+          <div class="column is-one-quarter-desktop is-one-third-tablet is-full-mobile">
             <SearchForm v-on:search="search"/>
           </div>
-          <div class="column">
+          <div class="column is-three-quarters-desktop is-two-thirds-tablet">
             <SearchResults
               v-bind:runs="runs"
               v-bind:errors="errors"
