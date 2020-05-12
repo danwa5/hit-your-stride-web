@@ -1,9 +1,14 @@
 <template>
-  <div class="map-modal" v-show="value">
-    <div class="container">
-      <textarea v-model="polyline" class="textarea" rows=6></textarea>
-
-      <button v-on:click.prevent="close">Close</button>
+  <div class="modal is-active" v-show="value">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Details</p>
+        <button v-on:click.prevent="close" class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <textarea v-model="polyline" class="textarea" rows="10"></textarea>
+      </section>
     </div>
   </div>
 </template>
@@ -24,10 +29,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css" scoped>
-  .map-modal {
-    background-color: #aaa;
-    padding: 5px;
-  }
-</style>

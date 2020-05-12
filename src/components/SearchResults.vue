@@ -35,7 +35,8 @@
           <td>
             {{ location(run.attributes) }}
 
-            <button class="btn" v-on:click="openModal(run.attributes.polyline)">Open Modal {{ modalOpen }}</button>
+            <button v-on:click="openModal(run.attributes.polyline)"
+                    class="button is-primary is-outlined is-small">Details</button>
           </td>
         </tr>
       </tbody>
