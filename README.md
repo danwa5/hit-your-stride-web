@@ -27,3 +27,9 @@ yarn run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+**Useful**
+
+* [Vue Documentation](https://vuejs.org/v2/guide/)
+* [Google Charts](https://developers.google.com/chart/interactive/docs)
+* [Google Maps](https://developers.google.com/maps/documentation/javascript)

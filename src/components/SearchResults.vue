@@ -32,23 +32,34 @@
           <td class="has-text-centered">{{ time(run.attributes.moving_time) }}</td>
           <td class="has-text-centered">{{ pace(run.attributes.mile_pace)}}</td>
           <td class="has-text-centered" v-text="run.attributes.layoff"></td>
-          <td>{{ location(run.attributes) }}</td>
+          <td>
+            {{ location(run.attributes) }}
+
+            <button class="btn" v-on:click="openModal(run.attributes.polyline)">Open Modal {{ modalOpen }}</button>
+          </td>
         </tr>
       </tbody>
     </table>
+
+    <ModalDirection v-model="modalOpen" v-bind:polyline="polyline" />
   </div>
 </template>
 
 <script>
 import moment from 'moment';
+import ModalDirection from './Modal';
 
 export default {
   name: 'SearchResults',
-  components: {},
+  components: {
+    ModalDirection
+  },
   data() {
     return {
       title: 'Search Results',
       displayMode: 'grid',
+      modalOpen: false,
+      polyline: null
     };
   },
   methods: {
@@ -81,6 +92,11 @@ export default {
         time = hr + ':' + time;
       }
       return time;
+    },
+
+    openModal(polyline) {
+      this.modalOpen = !this.modalOpen;
+      this.polyline = polyline;
     }
   },
   props: [
