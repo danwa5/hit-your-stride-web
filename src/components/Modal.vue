@@ -7,15 +7,22 @@
         <button v-on:click.prevent="close" class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        <textarea v-model="polyline" class="textarea" rows="10"></textarea>
+        <textarea v-model="polyline" class="textarea" rows="5"></textarea>
+
+        <GoogleMapLoader :mapConfig="mapConfig" />
       </section>
     </div>
   </div>
 </template>
 
 <script>
+import GoogleMapLoader from './GoogleMapLoader';
+
 export default {
   name: 'Modal',
+  components: {
+    GoogleMapLoader
+  },
   props: {
     value: {
       required: true
