@@ -42,18 +42,18 @@
       </tbody>
     </table>
 
-    <ModalDirection v-model="modalOpen" v-bind:polyline="polyline" />
+    <RunDetails v-model="modalOpen" v-bind:polyline="polyline" />
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-import ModalDirection from './Modal';
+import RunDetails from './RunDetails';
 
 export default {
   name: 'SearchResults',
   components: {
-    ModalDirection
+    RunDetails
   },
   data() {
     return {
