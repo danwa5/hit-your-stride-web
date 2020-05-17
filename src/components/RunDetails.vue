@@ -37,14 +37,15 @@ export default {
       apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY
     })
     this.google = googleMapApi;
+  },
+  beforeUpdate() {
+    // decode the encoded polyline to an array of coordinates
+    this.runPathCoordinates = this.google.maps.geometry.encoding.decodePath(this.polyline);
     this.initializeMap();
   },
   methods: {
     initializeMap() {
       const mapContainer = this.$refs.googleMap
-
-      // decode the encoded polyline to an array of coordinates
-      this.runPathCoordinates = this.google.maps.geometry.encoding.decodePath(this.polyline);
 
       this.map = new this.google.maps.Map(mapContainer, {
         center: this.runPathCoordinates[0],
