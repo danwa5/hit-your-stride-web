@@ -46,11 +46,7 @@ export default {
   methods: {
     initializeMap() {
       const mapContainer = this.$refs.googleMap
-
-      this.map = new this.google.maps.Map(mapContainer, {
-        center: this.runPathCoordinates[0],
-        zoom: 13
-      });
+      this.map = new this.google.maps.Map(mapContainer, {});
 
       var runPath = new this.google.maps.Polyline({
         path: this.runPathCoordinates,
@@ -61,6 +57,13 @@ export default {
       })
 
       runPath.setMap(this.map);
+
+      // fit and center route on map
+      var bounds = new this.google.maps.LatLngBounds();
+      for (var n = 0; n < this.runPathCoordinates.length ; n++) {
+        bounds.extend(this.runPathCoordinates[n]);
+      }
+      this.map.fitBounds(bounds);
     },
     close() {
       this.$emit("input", !this.value);
