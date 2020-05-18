@@ -24,7 +24,6 @@
             <SearchResults
               v-bind:runs="runs"
               v-bind:errors="errors"
-              v-bind:reformattedSearchString="reformattedSearchString"
             />
 
             <div style="display: flex;">
@@ -67,20 +66,19 @@ export default {
       errors: [],
       pages: null,
       pageLinks: [],
-      queryParams: '',
-      reformattedSearchString: ''
+      queryParams: ''
     };
   },
   methods: {
-    search(searchParams) {
+    search(params) {
       let qParams = '';
 
       // format query parameters
-      for (var key in searchParams) {
-        let value = searchParams[key];
+      for (var key in params) {
+        let value = params[key];
 
         if (value !== '') {
-          searchParams[key] = value;
+          params[key] = value;
 
           if (key.startsWith('distance')) {
             value = (value * 1609.34).toFixed(3);
@@ -99,7 +97,6 @@ export default {
         }
       }
 
-      this.reformattedSearchString = searchParams;
       this.queryParams = qParams;
       this.getData(qParams);
     },

@@ -43,7 +43,7 @@ const apiService = new ApiService();
 
 export default {
   name: 'Runs',
-  data() {
+  data: function() {
     return {
       runs: [],
       errors: [],

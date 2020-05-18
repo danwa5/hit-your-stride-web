@@ -123,7 +123,7 @@
 <script>
 export default {
   name: 'SearchForm',
-  data() {
+  data: function() {
     return {
       form: {}
     };

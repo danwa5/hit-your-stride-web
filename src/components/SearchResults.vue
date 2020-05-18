@@ -55,7 +55,11 @@ export default {
   components: {
     RunDetails
   },
-  data() {
+  props: {
+    runs: Array,
+    errors: Array,
+  },
+  data: function() {
     return {
       title: 'Search Results',
       displayMode: 'grid',
@@ -99,11 +103,6 @@ export default {
       this.modalOpen = !this.modalOpen;
       this.polyline = polyline;
     }
-  },
-  props: [
-    'runs',
-    'errors',
-    'reformattedSearchString'
-  ]
+  }
 };
 </script>

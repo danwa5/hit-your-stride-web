@@ -20,11 +20,12 @@ export default {
   name: 'RunDetails',
   props: {
     value: {
+      type: Boolean,
       required: true
     },
     polyline: String
   },
-  data() {
+  data: function() {
     return {
       google: null,
       map: null,

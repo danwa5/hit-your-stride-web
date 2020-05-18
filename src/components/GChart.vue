@@ -42,9 +42,9 @@ export default {
       return moment(date).format('M-D-YYYY');
     }
   },
-  props: [
-    'runs'
-  ],
+  props: {
+    runs: Array
+  },
   computed: {
     chart_data: function() {
       var d = [["Date", "Mile Pace (min/mile)", { role: "style" } ]];
