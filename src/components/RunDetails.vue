@@ -3,11 +3,27 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Details</p>
+        <p class="modal-card-title">{{ this.run.attributes.start_date }}</p>
         <button v-on:click.prevent="close" class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        <div class="google-map" ref="googleMap"></div>
+        <div class="columns">
+          <div class="column">
+            <div class="google-map" ref="googleMap"></div>
+          </div>
+          <div class="column">
+            <table class="table is-narrow is-fullwidth">
+              <tr><td>City</td><td>{{ this.run.attributes.city }}</td></tr>
+              <tr><td>State</td><td>{{ this.run.attributes.state_province }}</td></tr>
+              <tr><td>Country</td><td>{{ this.run.attributes.country }}</td></tr>
+              <tr><td>Distance</td><td>{{ this.run.attributes.distance }}</td></tr>
+              <tr><td>Moving Time</td><td>{{ this.run.attributes.moving_time }}</td></tr>
+              <tr><td>Elapsed Time</td><td>{{ this.run.attributes.elapsed_time }}</td></tr>
+              <tr><td>Mile Pace</td><td>{{ this.run.attributes.mile_pace }}</td></tr>
+              <tr><td>Layoff</td><td>{{ this.run.attributes.layoff }}</td></tr>
+            </table>
+          </div>
+        </div>
       </section>
     </div>
   </div>
@@ -23,7 +39,25 @@ export default {
       type: Boolean,
       required: true
     },
-    polyline: String
+    run: {
+      type: Object,
+      default: () => ({
+        id: null,
+        attributes: {
+          activity_type: null,
+          city: null,
+          country: null,
+          distance: null,
+          elapsed_time: null,
+          layoff: null,
+          mile_pace: null,
+          moving_time: null,
+          polyline: null,
+          start_date: null,
+          state_province: null
+        }
+      }),
+    }
   },
   data: function() {
     return {
@@ -41,7 +75,7 @@ export default {
   },
   beforeUpdate() {
     // decode the encoded polyline to an array of coordinates
-    this.runPathCoordinates = this.google.maps.geometry.encoding.decodePath(this.polyline);
+    this.runPathCoordinates = this.google.maps.geometry.encoding.decodePath(this.run.attributes.polyline);
     this.initializeMap();
   },
   methods: {

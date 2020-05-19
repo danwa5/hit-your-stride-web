@@ -35,14 +35,14 @@
           <td>
             {{ location(run.attributes) }}
 
-            <button v-on:click="openModal(run.attributes.polyline)"
+            <button v-on:click="openModal(run)"
                     class="button is-primary is-outlined is-small">Details</button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <RunDetails v-model="modalOpen" v-bind:polyline="polyline" />
+    <RunDetails v-model="modalOpen" v-bind:run="selectedRun || undefined" />
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default {
       title: 'Search Results',
       displayMode: 'grid',
       modalOpen: false,
-      polyline: null
+      selectedRun: null
     };
   },
   methods: {
@@ -99,9 +99,9 @@ export default {
       return time;
     },
 
-    openModal(polyline) {
+    openModal(run) {
       this.modalOpen = !this.modalOpen;
-      this.polyline = polyline;
+      this.selectedRun = run;
     }
   }
 };
