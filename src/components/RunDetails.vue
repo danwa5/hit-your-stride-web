@@ -3,7 +3,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ this.run.attributes.start_date }}</p>
+        <p class="modal-card-title">{{ date(this.run.attributes.start_date) }}</p>
         <button v-on:click.prevent="close" class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
@@ -16,11 +16,11 @@
               <tr><td>City</td><td>{{ this.run.attributes.city }}</td></tr>
               <tr><td>State</td><td>{{ this.run.attributes.state_province }}</td></tr>
               <tr><td>Country</td><td>{{ this.run.attributes.country }}</td></tr>
-              <tr><td>Distance</td><td>{{ this.run.attributes.distance }}</td></tr>
-              <tr><td>Moving Time</td><td>{{ this.run.attributes.moving_time }}</td></tr>
-              <tr><td>Elapsed Time</td><td>{{ this.run.attributes.elapsed_time }}</td></tr>
-              <tr><td>Mile Pace</td><td>{{ this.run.attributes.mile_pace }}</td></tr>
-              <tr><td>Layoff</td><td>{{ this.run.attributes.layoff }}</td></tr>
+              <tr><td>Distance</td><td>{{ miles(this.run.attributes.distance) }} miles</td></tr>
+              <tr><td>Moving Time</td><td>{{ time(this.run.attributes.moving_time) }}</td></tr>
+              <tr><td>Elapsed Time</td><td>{{ time(this.run.attributes.elapsed_time) }}</td></tr>
+              <tr><td>Mile Pace</td><td>{{ pace(this.run.attributes.mile_pace) }} min/mile</td></tr>
+              <tr><td>Layoff</td><td>{{ this.run.attributes.layoff }} days</td></tr>
             </table>
           </div>
         </div>
@@ -30,10 +30,13 @@
 </template>
 
 <script>
+import conversion from '../mixins/unitConversion';
+import moment from 'moment';
 import GoogleMapsApiLoader from 'google-maps-api-loader'
 
 export default {
   name: 'RunDetails',
+  mixins: [conversion],
   props: {
     value: {
       type: Boolean,
@@ -53,7 +56,7 @@ export default {
           mile_pace: null,
           moving_time: null,
           polyline: null,
-          start_date: null,
+          start_date: '0000-00-00',
           state_province: null
         }
       }),
@@ -100,8 +103,14 @@ export default {
       }
       this.map.fitBounds(bounds);
     },
+
     close() {
       this.$emit("input", !this.value);
+    },
+
+    date: function(timestamp) {
+      timestamp = timestamp.replace(/Z/, '');
+      return moment(timestamp).format('MMMM DD, YYYY [at] h:mma');
     }
   },
 };
