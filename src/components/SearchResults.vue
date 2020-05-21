@@ -19,25 +19,21 @@
           <th class="pace has-text-centered">
             <abbr title="minute/mile">Pace</abbr>
           </th>
-          <th class="layoff has-text-centered">
+          <th class="layoff has-text-centered is-hidden-mobile">
             <abbr title="days">Layoff</abbr>
           </th>
-          <th>Location</th>
+          <th class="is-hidden-mobile">Location</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="run in runs" v-bind:key="run.id">
+        <tr v-on:click="openModal(run)"
+            v-for="run in runs" v-bind:key="run.id">
           <td>{{ date(run.attributes.start_date) }}</td>
           <td class="has-text-centered">{{ miles(run.attributes.distance) }}</td>
           <td class="has-text-centered">{{ time(run.attributes.moving_time) }}</td>
           <td class="has-text-centered">{{ pace(run.attributes.mile_pace)}}</td>
-          <td class="has-text-centered" v-text="run.attributes.layoff"></td>
-          <td>
-            {{ location(run.attributes) }}
-
-            <button v-on:click="openModal(run)"
-                    class="button is-primary is-outlined is-small">Details</button>
-          </td>
+          <td class="has-text-centered is-hidden-mobile" v-text="run.attributes.layoff"></td>
+          <td class="is-hidden-mobile">{{ location(run.attributes) }}</td>
         </tr>
       </tbody>
     </table>
