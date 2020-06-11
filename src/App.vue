@@ -37,7 +37,9 @@
               </div>
             </div>
 
-            <GChart v-bind:runs="runs" />
+            <SearchResultsChart v-bind:runs="runs" />
+
+            <GChart2 v-bind:runs="runs" />
           </div>
         </div>
       </div>
@@ -49,7 +51,8 @@
 import { ApiService } from './ApiService';
 import SearchForm from './components/SearchForm';
 import SearchResults from './components/SearchResults';
-import GChart from './components/GChart';
+import SearchResultsChart from './components/GChart';
+import GChart2 from './components/GChart2';
 
 const apiService = new ApiService();
 
@@ -58,7 +61,8 @@ export default {
   components: {
     SearchForm,
     SearchResults,
-    GChart
+    SearchResultsChart,
+    GChart2
   },
   data: function() {
     return {
