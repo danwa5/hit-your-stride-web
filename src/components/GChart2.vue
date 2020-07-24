@@ -37,13 +37,17 @@ export default {
   },
   methods: {
     transformData() {
-      var d = [["Date", "Mile Pace (min/mile)", { role: "style" } ]];
+      var d = [['Date', 'Mile Pace (min/mile)', { role: 'style' }, { role: 'annotation' } ]];
 
       this.runs.slice().reverse().forEach(function(value) {
         let raw_date = value.attributes.start_date;
         let date = moment(raw_date.replace(/Z/, '')).format('M-D-YY');
-        let seconds = value.attributes.mile_pace;
-        let mile_pace = Math.round((seconds / 60) * 100) / 100;
+        let mile_pace_seconds = value.attributes.mile_pace;
+        let mile_pace = Math.round((mile_pace_seconds / 60) * 100) / 100;
+
+        let pace_minutes = parseInt(mile_pace_seconds / 60);
+        let pace_seconds = ('0' + (mile_pace_seconds % 60)).slice(-2);
+        let formatted_pace = pace_minutes + ':' + pace_seconds
         let color;
 
         switch(true) {
@@ -63,7 +67,7 @@ export default {
             color = '#153633';
         }
 
-        d.push([date, mile_pace, color]);
+        d.push([date, mile_pace, color, formatted_pace]);
       });
 
       return d;
