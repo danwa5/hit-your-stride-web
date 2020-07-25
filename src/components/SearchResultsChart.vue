@@ -13,7 +13,7 @@ import { GChart } from 'vue-google-charts';
 import moment from 'moment';
 
 export default {
-  name: 'GChart2',
+  name: 'SearchResultsChart',
   components: {
     GChart
   },
