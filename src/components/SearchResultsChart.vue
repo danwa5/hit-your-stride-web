@@ -27,11 +27,25 @@ export default {
         chart: {
           title: 'Run Performance',
         },
-        hAxis: { title: 'Run Date' },
-        vAxis: { title: 'Mile Pace (min/mile)' },
+        hAxis: {
+          title: 'Run Date',
+          titleTextStyle: {
+            italic: false
+          }
+        },
+        vAxis: {
+          title: 'Mile Pace (min/mile)',
+          format: '0.0',
+          viewWindow: { min: 6.5 },
+          titleTextStyle: {
+            fontSize: 12,
+            italic: false
+          }
+        },
         height: 200,
-        bar: { groupWidth: "95%" },
-        legend: { position: "none" }
+        bar: { groupWidth: '95%' },
+        chartArea: { width: '80%' },
+        legend: { position: 'none' }
       }
     }
   },

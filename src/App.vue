@@ -33,10 +33,8 @@
           </div>
         </div>
       </div>
-    </section>
-    <div class="container">
       <SearchResultsChart v-bind:runs="runs" />
-    </div>
+    </section>
   </div>
 </template>
 
