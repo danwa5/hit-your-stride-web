@@ -31,7 +31,7 @@
 
 <script>
 import conversion from '../mixins/unitConversion';
-import moment from 'moment';
+import { format, parseISO } from 'date-fns';
 import GoogleMapsApiLoader from 'google-maps-api-loader'
 
 export default {
@@ -56,7 +56,7 @@ export default {
           mile_pace: null,
           moving_time: null,
           polyline: null,
-          start_date: '0000-00-00',
+          start_date: null,
           state_province: null
         }
       }),
@@ -109,8 +109,9 @@ export default {
     },
 
     date: function(timestamp) {
-      timestamp = timestamp.replace(/Z/, '');
-      return moment(timestamp).format('MMMM DD, YYYY [at] h:mma');
+      if (timestamp != null) {
+        return format(parseISO(timestamp.replace(/Z/, '')), "MMMM dd, yyyy 'at' h:mma");
+      }
     }
   },
 };

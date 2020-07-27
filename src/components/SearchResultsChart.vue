@@ -10,7 +10,7 @@
 
 <script>
 import { GChart } from 'vue-google-charts';
-import moment from 'moment';
+import { format, parseISO } from 'date-fns';
 
 export default {
   name: 'SearchResultsChart',
@@ -55,7 +55,7 @@ export default {
 
       this.runs.slice().reverse().forEach(function(value) {
         let raw_date = value.attributes.start_date;
-        let date = moment(raw_date.replace(/Z/, '')).format('M-D-YY');
+        let date = format(parseISO(raw_date.replace(/Z/, '')), 'M-d-yy');
         let mile_pace_seconds = value.attributes.mile_pace;
         let mile_pace = Math.round((mile_pace_seconds / 60) * 100) / 100;
 

@@ -17,8 +17,8 @@
     "axios": "^0.19.0",
     "bulma": "^0.8.0",
     "core-js": "^3.6.4",
+    "date-fns": "^2.15.0",
     "google-maps-api-loader": "^1.1.1",
-    "moment": "^2.24.0",
     "vue": "^2.6.10",
     "vue-google-charts": "^0.3.2"
   },
@@ -31,7 +31,8 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "webpack-bundle-analyzer": "^3.8.0"
   },
   "eslintConfig": {
     "root": true,

@@ -44,7 +44,7 @@
 
 <script>
 import conversion from '../mixins/unitConversion';
-import moment from 'moment';
+import { format, parseISO } from 'date-fns';
 import RunDetails from './RunDetails';
 
 export default {
@@ -67,8 +67,7 @@ export default {
   },
   methods: {
     date: function(timestamp) {
-      timestamp = timestamp.replace(/Z/, '');
-      return moment(timestamp).format('MM-DD-YYYY h:mma');
+      return format(parseISO(timestamp.replace(/Z/, '')), 'MM-dd-yyyy h:mmaaaaa');
     },
 
     location: function(attrs) {
