@@ -22,6 +22,9 @@
           <th class="layoff has-text-centered is-hidden-mobile">
             <abbr title="days">Layoff</abbr>
           </th>
+          <th class="route has-text-centered is-hidden-mobile">
+            Route
+          </th>
           <th class="is-hidden-mobile">Location</th>
         </tr>
       </thead>
@@ -33,6 +36,7 @@
           <td class="has-text-centered">{{ time(run.attributes.moving_time) }}</td>
           <td class="has-text-centered">{{ pace(run.attributes.mile_pace)}}</td>
           <td class="has-text-centered is-hidden-mobile" v-text="run.attributes.layoff"></td>
+          <td class="has-text-centered is-hidden-mobile">{{ run.attributes.route_id }}</td>
           <td class="is-hidden-mobile">{{ location(run.attributes) }}</td>
         </tr>
       </tbody>

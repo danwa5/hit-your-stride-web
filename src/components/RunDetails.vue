@@ -12,6 +12,10 @@
             <div class="google-map" ref="googleMap"></div>
           </div>
           <div class="column">
+            <div class="mb-3">
+              <span class="tag is-dark">Route {{ this.run.attributes.route_id }}</span>
+            </div>
+
             <table class="table is-narrow is-fullwidth">
               <tr><td>City</td><td>{{ this.run.attributes.city }}</td></tr>
               <tr><td>State</td><td>{{ this.run.attributes.state_province }}</td></tr>
