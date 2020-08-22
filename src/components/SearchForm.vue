@@ -4,13 +4,12 @@
       <label class="label">
         City
         <div class="control">
-          <input
-            v-model="form['city']"
-            v-on:keydown.13.prevent="parseFormFields"
-            type="text"
-            placeholder="City"
-            class="input is-small"
-          >
+          <select v-model="form['city']" class="input is-small">
+            <option value='' disabled selected>Select a City</option>
+            <option v-for="location in locations" :key="location.text" :value="location.value">
+              {{ location.text }}
+            </option>
+          </select>
         </div>
       </label>
     </div>
@@ -106,7 +105,7 @@
               v-model="form['layoff-min']"
               v-on:keydown.13.prevent="parseFormFields"
               type="text"
-              placeholder="Layoff (min)"
+              placeholder="min"
               class="input is-small"
             >
           </div>
@@ -133,14 +132,61 @@
 </template>
 
 <script>
+import { ApiService } from '../ApiService';
+
+const apiService = new ApiService();
+
 export default {
   name: 'SearchForm',
   data: function() {
     return {
-      form: {}
+      form: {},
+      locations: []
     };
   },
   methods: {
+    getLocations() {
+      apiService
+        .getRunLocations()
+        .then((data) => {
+          this.locations = data.results.sort(function(a, b) {
+            // sort locations by country and then city
+            if (a.attributes.country > b.attributes.country) {
+              return 1
+            } else if (a.attributes.country === b.attributes.country) {
+              if (a.attributes.city > b.attributes.city) {
+                return 1
+              } else {
+                return -1
+              }
+            } else {
+              return -1
+            }
+          }).map(res => {
+            let o = {}
+            o['text'] = this.formatLocation(res.attributes.city, res.attributes.state_province, res.attributes.country)
+            o['value'] = res.attributes.city
+            return o
+          })
+        }).catch(error => {
+          this.errors.push(error);
+        })
+    },
+
+    formatLocation(city, state, country) {
+      var location = city;
+
+      if (state !== null && state !== city) {
+        location += ', ' + state;
+      }
+
+      if (country !== null) {
+        location += ', ' + country;
+      }
+
+      return location;
+    },
+
     parseFormFields() {
       const searchParams = {};
 
@@ -158,7 +204,11 @@ export default {
 
     resetForm() {
       this.$emit('search', {});
+      this.form['city'] = undefined;
     }
+  },
+  mounted() {
+    this.getLocations();
   }
 };
 </script>

@@ -75,7 +75,17 @@ export default {
     },
 
     location: function(attrs) {
-      return attrs.city + ', ' + attrs.state_province + ', ' + attrs.country;
+      var location = attrs.city;
+
+      if (attrs.state_province !== null && attrs.state_province != attrs.city) {
+        location += ', ' + attrs.state_province;
+      }
+
+      if (attrs.country !== null) {
+        location += ', ' + attrs.country;
+      }
+
+      return location;
     },
 
     openModal(run) {
