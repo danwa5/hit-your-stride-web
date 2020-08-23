@@ -60,6 +60,7 @@ export default {
           mile_pace: null,
           moving_time: null,
           polyline: null,
+          split_distance_coordinates: null,
           start_date: null,
           state_province: null
         }
@@ -100,12 +101,48 @@ export default {
 
       runPath.setMap(this.map);
 
+      // add start, finish, and mile markers to map
+      this.addMarkers(
+        this.map,
+        this.runPathCoordinates[0],
+        this.runPathCoordinates[this.runPathCoordinates.length-1],
+        this.run.attributes.split_distance_coordinates
+      )
+
       // fit and center route on map
       var bounds = new this.google.maps.LatLngBounds();
       for (var n = 0; n < this.runPathCoordinates.length ; n++) {
         bounds.extend(this.runPathCoordinates[n]);
       }
       this.map.fitBounds(bounds);
+    },
+
+    addMarkers(map, start, finish, mileMarkers) {
+      let startMarker = new this.google.maps.Marker({
+        position: start,
+        label: 'S',
+        title: 'Start'
+      })
+      startMarker.setMap(map);
+
+      let finishMarker = new this.google.maps.Marker({
+        position: finish,
+        label: 'F',
+        title: 'Finish'
+      })
+      finishMarker.setMap(map);
+
+      mileMarkers.forEach((element) => {
+        let mileNum = Math.round(element.distance).toString();
+
+        let marker = new this.google.maps.Marker({
+          position: { lat: element.latlng[0], lng: element.latlng[1] },
+          label: mileNum,
+          title: 'Mile ' + mileNum
+        })
+
+        marker.setMap(map)
+      })
     },
 
     close() {
