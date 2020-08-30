@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+$modal-content-width: 800px;
+
 .table {
   .date { width: 180px; }
   .distance { width: 90px; }
@@ -14,3 +16,5 @@
   margin: 0 auto;
   background: gray;
 }
+
+@import './../../node_modules/bulma/bulma.sass';

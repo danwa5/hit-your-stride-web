@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "css-build": "node-sass --omit-source-map-url styles/global.scss styles/global.css",
-    "css-watch": "yarn run css-build",
+    "css-build": "node-sass --omit-source-map-url sass/global.scss css/global.css",
+    "css-watch": "yarn run css-build -o --watch",
     "start": "yarn run css-watch"
   },
   "dependencies": {

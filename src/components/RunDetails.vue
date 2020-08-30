@@ -8,10 +8,10 @@
       </header>
       <section class="modal-card-body">
         <div class="columns">
-          <div class="column">
+          <div class="column is-three-fifths">
             <div class="google-map" ref="googleMap"></div>
           </div>
-          <div class="column">
+          <div class="column is-two-fifths">
             <div class="mb-3">
               <span class="tag is-dark">Route {{ this.run.attributes.route_id }}</span>
             </div>
