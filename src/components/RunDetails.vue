@@ -14,6 +14,12 @@
           <div class="column is-two-fifths">
             <div class="mb-3">
               <span class="tag is-dark">Route {{ this.run.attributes.route_id }}</span>
+
+              <article v-if="this.run.attributes.route_rank !== null" class="message is-warning pt-3">
+                <div class="message-body">
+                  {{ this.rankDescription(this.run.attributes.route_rank) }}
+                </div>
+              </article>
             </div>
 
             <table class="table is-narrow is-fullwidth">
@@ -60,6 +66,8 @@ export default {
           mile_pace: null,
           moving_time: null,
           polyline: null,
+          route_id: null,
+          route_rank: null,
           split_distance_coordinates: null,
           start_date: null,
           state_province: null
@@ -151,8 +159,37 @@ export default {
 
     date: function(timestamp) {
       if (timestamp != null) {
-        return format(parseISO(timestamp.replace(/Z/, '')), "MMMM dd, yyyy 'at' h:mma");
+        return format(parseISO(timestamp.replace(/Z/, '')), "EEEE, MMMM dd, yyyy 'at' h:mma");
       }
+    },
+
+    rankDescription: function(rank) {
+      var desc = '';
+
+      if (rank !== null) {
+        let rankStr = rank.toString();
+        let place;
+
+        if (rank === 1) {
+          place = 'The';
+        } else if (rank < 10 || rank > 20) {
+          if (rankStr.endsWith('1')) {
+            place = rankStr + 'st';
+          } else if (rankStr.endsWith('2')) {
+            place = rankStr + 'nd';
+          } else if (rankStr.endsWith('3')) {
+            place = rankStr + 'rd';
+          } else {
+            place = rankStr + 'th';
+          }
+        } else {
+          place = rankStr + 'th';
+        }
+
+        desc = `${place} fastest pace for this route!`;
+      }
+
+      return desc;
     }
   },
 };

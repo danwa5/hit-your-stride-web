@@ -36,8 +36,11 @@
           <td class="has-text-centered">{{ time(run.attributes.moving_time) }}</td>
           <td class="has-text-centered">{{ pace(run.attributes.mile_pace)}}</td>
           <td class="has-text-centered is-hidden-mobile" v-text="run.attributes.layoff"></td>
-          <td class="has-text-centered is-hidden-mobile">{{ run.attributes.route_id }}</td>
-          <td class="is-hidden-mobile">{{ location(run.attributes) }}</td>
+          <td class="has-text-centered is-hidden-mobile">
+            {{ run.attributes.route_id }}
+            <font-awesome-icon icon="medal" v-if="firstPlace(run.attributes.route_rank)"></font-awesome-icon>
+          </td>
+          <td class="is-hidden-mobile">{{ location(run.attributes) }} </td>
         </tr>
       </tbody>
     </table>
@@ -72,6 +75,10 @@ export default {
   methods: {
     date: function(timestamp) {
       return format(parseISO(timestamp.replace(/Z/, '')), 'MM-dd-yyyy h:mmaaaaa');
+    },
+
+    firstPlace: function(rank) {
+      return rank !== null && rank == 1 ? true : false;
     },
 
     location: function(attrs) {

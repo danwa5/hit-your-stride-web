@@ -22,7 +22,7 @@
 
             <div style="display: flex;">
               <div v-for="(link, index) in pageLinks" v-bind:key="index">
-                <a v-if="link.page > 0" href="javascript:void();" class="pagination-link" @click="getData('', link.page)">
+                <a v-if="link.page > 0" href="javascript:void(0);" class="pagination-link" @click="getData('', link.page)">
                   <font-awesome-icon :icon="['fas', link.icon]" />
                 </a>
                 <a v-else class="pagination-link" disabled>
