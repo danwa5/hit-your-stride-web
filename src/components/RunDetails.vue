@@ -17,7 +17,7 @@
 
               <article v-if="this.run.attributes.route_rank !== null" class="message is-warning pt-3">
                 <div class="message-body">
-                  {{ this.rankDescription(this.run.attributes.route_rank) }}
+                  {{ this.rankDescription(this.run.attributes.route_rank, this.run.attributes.route_activity_count) }}
                 </div>
               </article>
             </div>
@@ -68,6 +68,7 @@ export default {
           polyline: null,
           route_id: null,
           route_rank: null,
+          route_activity_count: null,
           split_distance_coordinates: null,
           start_date: null,
           state_province: null
@@ -163,7 +164,7 @@ export default {
       }
     },
 
-    rankDescription: function(rank) {
+    rankDescription: function(rank, route_activity_count) {
       var desc = '';
 
       if (rank !== null) {
@@ -186,7 +187,7 @@ export default {
           place = rankStr + 'th';
         }
 
-        desc = `${place} fastest pace for this route!`;
+        desc = `${place} fastest pace out of ${route_activity_count} runs for this route!`;
       }
 
       return desc;
