@@ -12,17 +12,17 @@
             <div class="google-map" ref="googleMap"></div>
           </div>
           <div class="column is-two-fifths">
-            <div class="mb-3">
-              <span class="tag is-dark">Route {{ this.run.attributes.route_id }}</span>
+            <span class="tag is-dark">Route {{ this.run.attributes.route_id }}</span>
 
-              <article v-if="this.run.attributes.route_rank !== null" class="message is-warning pt-3">
+            <div class="mt-2 mb-3">
+              <article v-if="this.run.attributes.route_rank !== null" class="message is-small is-warning">
                 <div class="message-body">
                   {{ this.rankDescription(this.run.attributes.route_rank, this.run.attributes.route_activity_count) }}
                 </div>
               </article>
             </div>
 
-            <table class="table is-narrow is-fullwidth">
+            <table class="table run-details-table is-narrow is-fullwidth">
               <tr><td>City</td><td>{{ this.run.attributes.city }}</td></tr>
               <tr><td>State</td><td>{{ this.run.attributes.state_province }}</td></tr>
               <tr><td>Country</td><td>{{ this.run.attributes.country }}</td></tr>
@@ -32,6 +32,24 @@
               <tr><td>Mile Pace</td><td>{{ pace(this.run.attributes.mile_pace) }} min/mile</td></tr>
               <tr><td>Layoff</td><td>{{ this.run.attributes.layoff }} days</td></tr>
             </table>
+
+            <div v-if="this.run.attributes.route_rank !== null">
+              <div class="leaderboard-title has-text-centered">
+                Best Runs
+              </div>
+              <table class="table run-details-table is-narrow is-fullwidth">
+                <tr>
+                  <th>Rank</th>
+                  <th>Date</th>
+                  <th>Mile Pace</th>
+                </tr>
+                <tr v-for="(route, index) in routes" v-bind:key="index">
+                  <td>{{ route.routeRank }}</td>
+                  <td>{{ date_short(route.startDateLocal) }}</td>
+                  <td>{{ pace(route.milePace) }}</td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -40,9 +58,12 @@
 </template>
 
 <script>
+import { ApiService } from '../ApiService';
 import conversion from '../mixins/unitConversion';
 import { format, parseISO } from 'date-fns';
 import GoogleMapsApiLoader from 'google-maps-api-loader'
+
+const apiService = new ApiService();
 
 export default {
   name: 'RunDetails',
@@ -80,7 +101,8 @@ export default {
     return {
       google: null,
       map: null,
-      runPathCoordinates: null
+      runPathCoordinates: null,
+      routes: []
     }
   },
   async mounted() {
@@ -164,6 +186,21 @@ export default {
       }
     },
 
+    date_short: function(timestamp) {
+      if (timestamp != null) {
+        return timestamp.substring(0,10);
+      }
+    },
+
+    getFastestRunsForRoute: function(routeId) {
+      apiService.getFastestRunsForRoute(routeId)
+        .then((data) => {
+          this.routes = data.data.fastestRunsForRoute;
+        }).catch(error => {
+          this.errors.push(error);
+        })
+    },
+
     rankDescription: function(rank, route_activity_count) {
       var desc = '';
 
@@ -187,11 +224,17 @@ export default {
           place = rankStr + 'th';
         }
 
-        desc = `${place} fastest pace out of ${route_activity_count} runs for this route!`;
+        desc = `${place} fastest pace out of ${route_activity_count} runs!`;
       }
 
       return desc;
     }
   },
+
+  watch: {
+    run: function() {
+      this.getFastestRunsForRoute(this.run.attributes.route_id);
+    }
+  }
 };
 </script>

@@ -11,8 +11,21 @@ $modal-content-width: 800px;
   .route { width: 70px; }
 }
 
+.run-details-table th {
+  font-size: 0.85rem;
+}
+
+.run-details-table td {
+  font-size: 0.85rem;
+}
+
+.leaderboard-title {
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
 .google-map {
-  height: 500px;
+  height: 530px;
   margin: 0 auto;
   background: gray;
 }
